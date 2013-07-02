@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class test2 {
+public class DelFiles {
 
 	/**
 	 * @param args
@@ -9,8 +9,8 @@ public class test2 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		test2 t = new test2();
-		File file = new File("C:/Documents and Settings/yl0806/×ÀÃæ/trans");
+		DelFiles t = new DelFiles();
+		File file = new File("E:\\HUNDSUNCPP\\bank\\szpa");
 		t.chkFiles(file);
 	}
 
