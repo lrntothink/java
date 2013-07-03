@@ -8,12 +8,19 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SearchFile {
 	private String searchWord;
 	private String allowFileType;
 	private long totalFile = 0;
 	private long actualSearchFiles = 0;
+	private long folderNumbers = 0;
+	private int loopNumbers = 0;
 	PrintWriter   out   = null;
+	final static Logger log = LoggerFactory.getLogger(SearchFile.class);
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SearchFile sf = new SearchFile();
@@ -22,13 +29,13 @@ public class SearchFile {
 	}
 	private void doIt(){
 		//要搜索的内容
-		String searchword = "杨亮";
+		String searchword = "yangl";
 		//要搜索的文件类型
-		allowFileType = " txt ini js jsp java xml htm html properties sql ";
+		allowFileType = " txt ini js jsp java xml htm html properties sql c h pc cp sdf sh cfg ";
 		//搜索的位置
-		String searchPath = "D:\\workspace\\lcpt1.2";
+		String searchPath = "E:\\pdf";
 		//搜索结果的存放位置
-		String searchResultPath = "d:/112.txt";
+		String searchResultPath = "d:/111.txt";
 		try {
 			out   =   new PrintWriter(new OutputStreamWriter(new FileOutputStream(searchResultPath), "gbk"));
 		} catch (UnsupportedEncodingException e) {
@@ -42,13 +49,15 @@ public class SearchFile {
 		setSearchWord(searchword);
 		searchFiles(new File(searchPath));
 		long endTime = System.currentTimeMillis();
-		System.out.println(searchPath+"路径下，共有文件："+totalFile+"个");
-		System.out.println("实际搜索文件数："+actualSearchFiles+"个");
-		System.out.println("共花费时间："+(endTime - beginTime)+" 毫秒");
+		log.info(searchPath+"路径下，共有文件："+totalFile+"个\n");
+		log.info("共有文件夹："+folderNumbers+"个\n");
+		log.info("实际搜索文件数："+actualSearchFiles+"个\n");
+		log.info("共花费时间："+(endTime - beginTime)+" 毫秒\n");
 		out.close();
 	}
 	
 	private void searchFiles(File filePath ){
+		log.info("├--"+filePath.getName()+"\n");
 		if(filePath.isFile()){
 			totalFile++;
 			String filename = filePath.getName().toLowerCase();
@@ -60,10 +69,16 @@ public class SearchFile {
 				}
 			}
 		}else if(filePath.isDirectory()){
+			folderNumbers++;
+			loopNumbers++;
 			File[] file = filePath.listFiles();
 			for(File f:file){
+				for(int i=0;i<loopNumbers;i++){
+					log.info("│  ");
+				}
 				searchFiles(f);
 			}
+			loopNumbers--;
 		}
 	}
 	/**
