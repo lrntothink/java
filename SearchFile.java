@@ -17,7 +17,7 @@ public class SearchFile {
 	private long totalFile = 0;
 	private long actualSearchFiles = 0;
 	private long folderNumbers = 0;
-	private int loopNumbers = 0;
+//	private int loopNumbers = 0;
 	PrintWriter   out   = null;
 	final static Logger log = LoggerFactory.getLogger(SearchFile.class);
 	
@@ -49,15 +49,15 @@ public class SearchFile {
 		setSearchWord(searchword);
 		searchFiles(new File(searchPath));
 		long endTime = System.currentTimeMillis();
-		log.info(searchPath+"路径下，共有文件："+totalFile+"个\n");
-		log.info("共有文件夹："+folderNumbers+"个\n");
-		log.info("实际搜索文件数："+actualSearchFiles+"个\n");
-		log.info("共花费时间："+(endTime - beginTime)+" 毫秒\n");
+		log.info(searchPath+"路径下，共有文件："+totalFile+"个");
+		log.info("共有文件夹："+folderNumbers+"个");
+		log.info("实际搜索文件数："+actualSearchFiles+"个");
+		log.info("共花费时间："+(endTime - beginTime)+" 毫秒");
 		out.close();
 	}
 	
 	private void searchFiles(File filePath ){
-		log.info("├--"+filePath.getName()+"\n");
+//		log.info("├--"+filePath.getName()+"\n");
 		if(filePath.isFile()){
 			totalFile++;
 			String filename = filePath.getName().toLowerCase();
@@ -70,15 +70,15 @@ public class SearchFile {
 			}
 		}else if(filePath.isDirectory()){
 			folderNumbers++;
-			loopNumbers++;
+//			loopNumbers++;
 			File[] file = filePath.listFiles();
 			for(File f:file){
-				for(int i=0;i<loopNumbers;i++){
-					log.info("│  ");
-				}
+//				for(int i=0;i<loopNumbers;i++){
+//					log.info("│  ");
+//				}
 				searchFiles(f);
 			}
-			loopNumbers--;
+//			loopNumbers--;
 		}
 	}
 	/**
